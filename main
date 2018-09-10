@@ -10,14 +10,6 @@ singularity exec -e docker://brainlife/fsl:5.0.9 ./hcpAlignACPC.sh
 if [ ! -s t1.nii.gz ];
 then
 	echo "output missing"
-	results="ERROR: ACPC Alignment failed with an error";
-	cat <<EOM >product.json
-	${results}
-	EOM;
 	exit 1
-else
-	cat <<EOM >product.json
-	"ACPC Alignment complete"
-	EOM;
 fi
 
