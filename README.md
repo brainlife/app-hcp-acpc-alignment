@@ -15,6 +15,9 @@ This app will align a T1w image to the ACPC plane (specifically, the MNI152_T1_1
 [![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
 [![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
 
+### References 
+[Glasser et al. (2013) Neuroimage.](https://doi.org/10.1016/j.neuroimage.2013.04.127)
+
 ## Running the App 
 
 ### On Brainlife.io
