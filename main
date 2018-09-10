@@ -19,12 +19,12 @@ then
 	echo "output missing"
 	results="ERROR: ACPC Alignment failed with an error";
 	cat <<EOM >product.json
-		${results}
+	${results}
 	EOM;
 	exit 1
 else
 	cat <<EOM >product.json
-		"ACPC Alignment complete"
+	"ACPC Alignment complete"
 	EOM;
 fi
 
