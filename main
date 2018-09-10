@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=1,walltime=0:25:00
+#PBS -N HCP ACPC Alignment
+#PBS -V
+
+module load singularity 2> /dev/null
+
+singularity exec -e docker://brainlife/fsl:5.0.9 ./hcpAlignACPC.sh
+
+if [ ! -s t1.nii.gz ];
+then
+	echo "output missing"
+	exit 1
+fi
