@@ -2,7 +2,7 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.99-blue.svg)](https://doi.org/10.25663/bl.app.99)
 
 # app-hcp-acpc-alignment
-This app will align a T1w image to the ACPC plane. More specifically, it will align the T1w volume to the MNI152_T1_1mm template using a 6 DOF alignment via FSL commands. This protocol was adapted from the [HCP Preprocessing Pipeline] (https://github.com/Washington-University/HCPpipelines). First, the FOV is cropped using FSL's robustfov command. Next, the FOV matrix is inverted using FSL's convert_xfm command. Then, the cropped image is registered to the MNI152_T1_1mm template provided by FSL using FSL's flirt command. Following this, the transformation matrices are concatenated using FSL's convert_xfm command and the cropped image is aligned to the ACPC plane using FSL's aff2rigid. Finally, the original T1 is resampled to ACPC space using FSL's applywarp command.
+This app will align a T1w image to the ACPC plane. More specifically, it will align the T1w volume to the MNI152_T1_1mm template using a 6 DOF alignment via FSL commands. This protocol was adapted from the [HCP Preprocessing Pipeline](https://github.com/Washington-University/HCPpipelines). First, the FOV is cropped using FSL's robustfov command. Next, the FOV matrix is inverted using FSL's convert_xfm command. Then, the cropped image is registered to the MNI152_T1_1mm template provided by FSL using FSL's flirt command. Following this, the transformation matrices are concatenated using FSL's convert_xfm command and the cropped image is aligned to the ACPC plane using FSL's aff2rigid. Finally, the original T1 is resampled to ACPC space using FSL's applywarp command.
 
 ### Authors
 - Brad Caron (bacaron@iu.edu)
