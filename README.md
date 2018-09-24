@@ -55,7 +55,7 @@ bl dataset download 5b96bbbf059cf900271924f2 && mv 5b96bbbf059cf900271924f2 inpu
 
 ## Output
 
-The two main output of this App is an ACPC-aligned t1.nii.gz.
+The main output of this App is an ACPC-aligned t1.nii.gz.
 
 #### Product.json
 The secondary output of this app is `product.json`. This file allows web interfaces, DB and API calls on the results of the processing. 
