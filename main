@@ -5,9 +5,9 @@
 
 module load singularity 2> /dev/null
 
-singularity exec -e docker://brainlife/fsl:5.0.9 ./hcpAlignACPC.sh
+singularity exec -e docker://brainlife/fsl:5.0.9 ./run.sh
 
-if [ ! -s t1.nii.gz ];
+if [ ! -s out.nii.gz ];
 then
 	echo "output missing"
 	exit 1
