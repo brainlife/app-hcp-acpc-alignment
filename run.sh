@@ -19,4 +19,7 @@ convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
 aff2rigid full2std.mat outputmatrix
 applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o out.nii.gz
 
+# make png
+slicer out.nii.gz -x 0.5 out_aligncheck.png
+
 echo "all done!"
