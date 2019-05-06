@@ -22,4 +22,16 @@ applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o 
 # make png
 slicer out.nii.gz -x 0.5 out_aligncheck.png
 
+# create product.json
+cat << EOF > product.json
+{
+    "brainlife": [
+        { 
+            "type": "image/png", 
+            "name": "Alignment Check (-x 0.5)",
+            "base64": "$(base64 out_aligncheck.png)"
+        }
+    ]
+}
+EOF
 echo "all done!"
