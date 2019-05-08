@@ -29,7 +29,7 @@ cat << EOF > product.json
         { 
             "type": "image/png", 
             "name": "Alignment Check (-x 0.5)",
-            "base64": "$(base64 out_aligncheck.png)"
+            "base64": "$(base64 -w 0 out_aligncheck.png)"
         }
     ]
 }
