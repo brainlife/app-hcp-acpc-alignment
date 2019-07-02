@@ -3,8 +3,6 @@
 #PBS -N hcpacpc
 #PBS -V
 
-module load singularity 2> /dev/null
-
 singularity exec -e docker://brainlife/fsl:5.0.9 ./run.sh
 
 if [ ! -s out.nii.gz ];
