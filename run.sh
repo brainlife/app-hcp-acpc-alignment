@@ -9,8 +9,19 @@ set -x #show command running
 set -e #this will terminate if anything goes bad
 
 input=`jq -r '.input' config.json`
+template=`jq -r '.template' config.json`
 type=`jq -r '.type' config.json` #T1 or T2
-template=templates/MNI152_${type}_1mm
+
+case $template in
+nihpd_asym*)
+    [ $type == "T1" ] && template=templates/${template}_t1w.nii
+    [ $type == "T2" ] && template=templates/${template}_t2w.nii
+    ;;
+*)
+    [ $type == "T1" ] && template=templates/MNI152_T1_1mm
+    [ $type == "T2" ] && template=templates/MNI152_T2_1mm
+  ;;
+esac
 
 robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
