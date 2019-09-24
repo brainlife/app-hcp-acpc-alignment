@@ -23,7 +23,8 @@ nihpd_asym*)
   ;;
 esac
 
-robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
+fslreorient2std $input reorient.nii.gz
+robustfov -i reorient.nii.gz -m roi2full.mat -r input_robustfov.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
 flirt -interp spline -in input_robustfov.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
 convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
