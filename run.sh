@@ -6,7 +6,7 @@
 ## and outputs an acpc_aligned T1w image.
 
 set -x #show command running
-#set -e #this will terminate if anything goes bad
+set -e #this will terminate if anything goes bad
 
 input=`jq -r '.input' config.json`
 template=`jq -r '.template' config.json`
