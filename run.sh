@@ -6,11 +6,12 @@
 ## and outputs an acpc_aligned T1w image.
 
 set -x #show command running
-set -e #this will terminate if anything goes bad
+#set -e #this will terminate if anything goes bad
 
 input=`jq -r '.input' config.json`
 template=`jq -r '.template' config.json`
 type=`jq -r '.type' config.json` #T1 or T2
+reorient=`jq -r '.reorient' config.json` #reorient using fslreorient2std
 
 case $template in
 nihpd_asym*)
@@ -22,6 +23,11 @@ nihpd_asym*)
     [ $type == "T2" ] && template=templates/MNI152_T2_1mm
   ;;
 esac
+
+if [[ ${reorient} == true ]]; then
+    fslreorient2std $input input_reorient.nii.gz
+    input=input_reorient.nii.gz
+fi
 
 robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
