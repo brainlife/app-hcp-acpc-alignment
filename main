@@ -3,11 +3,8 @@
 #PBS -N hcpacpc
 #PBS -V
 
-singularity exec -e docker://brainlife/fsl:5.0.9 ./run.sh
+set -e
+set -x
 
-if [ ! -s out.nii.gz ];
-then
-	echo "output missing"
-	exit 1
-fi
+time singularity exec -e docker://brainlife/fsl:5.0.9 ./run.sh
 
