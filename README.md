@@ -1,68 +1,82 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.99-blue.svg)](https://doi.org/10.25663/bl.app.99)
+[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.116-blue.svg)](https://doi.org/10.25663/brainlife.app.116)
 
-# app-hcp-acpc-alignment
-This app will align a T1w image to the ACPC plane. More specifically, it will align the T1w volume to the MNI152_T1_1mm template using a 6 DOF alignment via FSL commands. This protocol was adapted from the [HCP Preprocessing Pipeline](https://github.com/Washington-University/HCPpipelines). First, the FOV is cropped using FSL's robustfov command. Next, the FOV matrix is inverted using FSL's convert_xfm command. Then, the cropped image is registered to the MNI152_T1_1mm template provided by FSL using FSL's flirt command. Following this, the transformation matrices are concatenated using FSL's convert_xfm command and the cropped image is aligned to the ACPC plane using FSL's aff2rigid. Finally, the original T1 is resampled to ACPC space using FSL's applywarp command.
+# Align T2 to ACPC Plane (HCP-based) 
 
-### Authors
-- Brad Caron (bacaron@iu.edu)
+This app will align a T1w or T2w image to the ACPC plane (specifically, the MNI152_T*_1mm template from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a T1w or T2w image input and outputs an MNI_aligned ('ACPC aligned') T*w image. 
 
-### Contributors
-- Soichi Hayashi (hayashi@iu.edu)
-- Franco Pestilli (franpest@indiana.edu)
+### Authors 
 
-### Funding
+- Brad Caron (bacaron@iu.edu) 
+
+### Contributors 
+
+- Soichi Hayashi (hayashis@iu.edu
+- Franco Pestilli (franpest@iu.edu) 
+
+### Funding 
+
 [![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
 [![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
+[![NSF-ACI-1916518](https://img.shields.io/badge/NSF_ACI-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
+[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1912270)
+[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://grantome.com/grant/NIH/R01-EB029272-01)
 
-### References 
-[Glasser et al. (2013) Neuroimage.](https://doi.org/10.1016/j.neuroimage.2013.04.127)
+### Citations 
+
+Please cite the following articles when publishing papers that used data, code or other resources created by the brainlife.io community. 
+
+1. Matthew F. Glasser, Stamatios N. Sotiropoulos, J. Anthony Wilson, Timothy S. Coalson, Bruce Fischl, Jesper L. Andersson, Junqian Xu, Saad Jbabdi, Matthew Webster, Jonathan R. Polimeni, David C. Van Essen, Mark Jenkinson, The minimal preprocessing pipelines for the Human Connectome Project, NeuroImage, Volume 80, 2013, Pages 105-124, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2013.04.127. (http://www.sciencedirect.com/science/article/pii/S1053811913005053) 
 
 ## Running the App 
 
-### On Brainlife.io
+### On Brainlife.io 
 
-You can submit this App online at [https://doi.org/10.25663/bl.app.99](https://doi.org/10.25663/bl.app.99) via the "Execute" tab.
+You can submit this App online at [10.25663/brainlife.app.116](10.25663/brainlife.app.116) via the 'Execute' tab. 
 
-### Running Locally (on your machine)
+### Running Locally (on your machine) 
 
-1. git clone this repo.
-2. Inside the cloned directory, create `config.json` with something like the following content with paths to your input files.
+1. git clone this repo 
 
-```json
+2. Inside the cloned directory, create `config.json` with something like the following content with paths to your input files. 
+
+```json 
 {
-        "t1": "./input/t1/t1.nii.gz"
-}
+    'input':    'testdata/anat/t1.nii.gz',
+    'template':    'MNI_152_T1_1mm',
+    'type':    'T1'
+} 
+``` 
+
+### Sample Datasets 
+
+You can download sample datasets from Brainlife using [Brainlife CLI](https://github.com/brain-life/cli). 
+
 ```
+npm install -g brainlife 
+bl login 
+mkdir input 
+bl dataset download 
+``` 
 
-### Sample Datasets
+3. Launch the App by executing 'main' 
 
-You can download sample datasets from Brainlife using [Brainlife CLI](https://github.com/brain-life/cli).
+```bash 
+./main 
+``` 
 
-```
-npm install -g brainlife
-bl login
-mkdir input
-bl dataset download 5b96bbbf059cf900271924f2 && mv 5b96bbbf059cf900271924f2 input/t1
-```
+## Output 
 
+The main output of this App is is a MNI_aligned ('ACPC aligned') T1w or T2w image. 
 
-3. Launch the App by executing `main`
+#### Product.json 
 
-```bash
-./main
-```
-
-## Output
-
-The main output of this App is an ACPC-aligned t1.nii.gz.
-
-#### Product.json
 The secondary output of this app is `product.json`. This file allows web interfaces, DB and API calls on the results of the processing. 
 
-### Dependencies
+### Dependencies 
 
-This App requires the following libraries when run locally.
+This App requires the following libraries when run locally. 
 
-  - singularity: https://singularity.lbl.gov/
-  - FSL: https://hub.docker.com/r/brainlife/fsl/tags/5.0.9
+- singularity: 
+- FSL: 
+- jsonlab: 
