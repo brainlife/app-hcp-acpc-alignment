@@ -32,7 +32,7 @@ Please cite the following articles when publishing papers that used data, code o
 
 ### On Brainlife.io 
 
-You can submit this App online at [10.25663/brainlife.app.116](10.25663/brainlife.app.116) via the 'Execute' tab. 
+You can submit this App online at [https://doi.org/10.25663/brainlife.app.116](https://doi.org/10.25663/brainlife.app.116) via the 'Execute' tab. 
 
 ### Running Locally (on your machine) 
 
