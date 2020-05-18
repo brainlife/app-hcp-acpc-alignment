@@ -42,9 +42,9 @@ You can submit this App online at [10.25663/brainlife.app.116](10.25663/brainlif
 
 ```json 
 {
-    'input':    'testdata/anat/t1.nii.gz',
-    'template':    'MNI_152_T1_1mm',
-    'type':    'T1'
+    "input":    "testdata/anat/t1.nii.gz",
+    "template":    "MNI_152_T1_1mm",
+    "type":    "T1"
 } 
 ``` 
 
