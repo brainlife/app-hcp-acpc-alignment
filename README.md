@@ -1,7 +1,7 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.116-blue.svg)](https://doi.org/10.25663/brainlife.app.116)
 
-# Align T1 to ACPC Plane (HCP-based) 
+# Align T1 or T2w to ACPC Plane (HCP-based) 
 
 This app will align a T1w or T2w image to the ACPC plane (specifically, the MNI152_T*_1mm template from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a T1w or T2w image input and outputs an MNI_aligned ('ACPC aligned') T*w image. 
 
