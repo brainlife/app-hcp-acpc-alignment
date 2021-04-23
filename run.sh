@@ -1,8 +1,8 @@
 #!/bin/bash
 
-## This app will align a T1/T2w image to the ACPC plane (specifically, the MNI152_T1/2_1mm template from
+## This app will align a mp2rage image to the ACPC plane (specifically, the MNI152_T1m template from
 ## FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing
-## Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a T1w image input
+## Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a mp2rage image input
 ## and outputs an acpc_aligned T1w image.
 
 set -x
