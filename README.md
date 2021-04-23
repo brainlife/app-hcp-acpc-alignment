@@ -1,9 +1,9 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.116-blue.svg)](https://doi.org/10.25663/brainlife.app.116)
 
-# Align T1 or T2w to ACPC Plane (HCP-based) 
+# Align mp2rage data to ACPC Plane (HCP-based) 
 
-This app will align a T1w or T2w image to the ACPC plane (specifically, the MNI152_T*_1mm template from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a T1w or T2w image input and outputs an MNI_aligned ('ACPC aligned') T*w image. 
+This app will align mp2rage iamges to the ACPC plane (specifically, the MNI152_T1_1mm template from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires mp2rage images input and outputs an MNI_aligned ('ACPC aligned') mp2rage images. 
 
 ### Authors 
 
@@ -13,6 +13,7 @@ This app will align a T1w or T2w image to the ACPC plane (specifically, the MNI1
 
 - Soichi Hayashi (hayashis@iu.edu
 - Franco Pestilli (franpest@iu.edu) 
+- Sophia Vinci-Booher (svincibo@iu.edu)
 
 ### Funding 
 
@@ -42,10 +43,13 @@ You can submit this App online at [https://doi.org/10.25663/brainlife.app.116](h
 
 ```json 
 {
-    "input":    "testdata/anat/t1.nii.gz",
-    "template":    "MNI_152_T1_1mm",
-    "type":    "T1"
-} 
+    "mag_inv1": "./test/mag.inv1.nii.gz",
+    "mag_inv2": "./test/mag.inv2.nii.gz",
+    "unit1":    "./test/unit1.nii.gz",
+    "phase_inv1":   "./test/phase.inv1.nii.gz",
+    "phase_inv2":   "./test/phase.inv2.nii.gz",
+    "template": "MNI_1mm"
+}
 ``` 
 
 ### Sample Datasets 
@@ -67,7 +71,7 @@ bl dataset download
 
 ## Output 
 
-The main output of this App is is a MNI_aligned ('ACPC aligned') T1w or T2w image. 
+The main output of this App is is a MNI_aligned ('ACPC aligned') mp2rage images. 
 
 #### Product.json 
 
