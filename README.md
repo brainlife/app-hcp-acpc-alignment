@@ -3,7 +3,7 @@
 
 # Align mp2rage data to ACPC Plane (HCP-based) 
 
-This app will align mp2rage images to the ACPC plane (specifically, the MNI152_T1_1mm template from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires mp2rage images input and outputs an MNI_aligned ('ACPC aligned') mp2rage images. 
+This app will align mp2rage images to the ACPC plane (specifically, the MNI152_T1_1mm template) from FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires mp2rage images input and outputs an MNI_aligned ('ACPC aligned') mp2rage images. 
 
 ### Authors 
 
