@@ -14,6 +14,7 @@ phase_inv1=`jq -r '.phase_inv1' config.json`
 phase_inv2=`jq -r '.phase_inv2' config.json`
 unit1=`jq -r '.unit1' config.json`
 template=`jq -r '.template' config.json`
+resample=`jq -r '.resample' config.json`
 
 product=""
 
@@ -47,7 +48,11 @@ done
 # crop data
 robustfov -i ${unit1} -m roi2full.mat -r unit1.cropped.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
-flirt -interp spline -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+if [[ ${resample} == true; then
+    flirt -interp spline -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+else
+    flirt -interp spline -noresample -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+fi
 convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
 aff2rigid full2std.mat outputmatrix
 
