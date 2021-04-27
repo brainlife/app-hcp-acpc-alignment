@@ -48,7 +48,7 @@ done
 # crop data
 robustfov -i ${unit1} -m roi2full.mat -r unit1.cropped.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
-if [[ ${resample} == true; then
+if [[ ${resample} == true ]]; then
     echo "computing flirt with resample"
     flirt -interp spline -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
 else
