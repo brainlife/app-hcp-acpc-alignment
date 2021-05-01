@@ -9,10 +9,15 @@ set -x
 set -e
 
 mag_inv1=`jq -r '.mag_inv1' config.json`
+mag_inv1_json=`jq -r '.mag_inv1_json' config.json`
 mag_inv2=`jq -r '.mag_inv2' config.json`
+mag_inv2_json=`jq -r '.mag_inv2_json' config.json`
 phase_inv1=`jq -r '.phase_inv1' config.json`
+phase_inv1_json=`jq -r '.phase_inv1_json' config.json`
 phase_inv2=`jq -r '.phase_inv2' config.json`
+phase_inv2_json=`jq -r '.phase_inv2_json' config.json`
 unit1=`jq -r '.unit1' config.json`
+unit1_json=`jq -r '.unit1_json' config.json`
 template=`jq -r '.template' config.json`
 resample=`jq -r '.resample' config.json`
 
@@ -64,6 +69,12 @@ do
     input=$(eval "echo \$${i}")
     outname=`echo ${i/_/.}`
     applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o ./output/${outname}.nii.gz
+done
+
+for i in ${volumes}
+do
+    vol_json=$(eval "echo \$${i}_json")
+    cp -v ${vol_json} ./output/
 done
 
 # make png
