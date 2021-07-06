@@ -12,6 +12,8 @@ input=`jq -r '.input' config.json`
 template=`jq -r '.template' config.json`
 type=`jq -r '.type' config.json` #T1 or T2
 
+[ ! -d ./transform ] && mkdir -p transform
+
 product=""
 
 #we use space from
@@ -51,6 +53,9 @@ applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o 
 
 # make png
 slicer $output -x 0.5 out_aligncheck.png
+
+# move transform
+[ ! -f ./transform/affine.txt ] && mv outputmatrix ./transform/affine.txt
 
 # create product.json
 cat << EOF > product.json
