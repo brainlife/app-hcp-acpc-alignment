@@ -20,6 +20,7 @@ unit1=`jq -r '.unit1' config.json`
 unit1_json=`jq -r '.unit1_json' config.json`
 template=`jq -r '.template' config.json`
 resample=`jq -r '.resample' config.json`
+interp=`jq -r '.interp' config.json`
 
 product=""
 
@@ -55,10 +56,10 @@ robustfov -i ${unit1} -m roi2full.mat -r unit1.cropped.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
 if [[ ${resample} == true ]]; then
     echo "computing flirt with resample"
-    flirt -interp spline -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+    flirt -interp ${interp} -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
 else
     echo "computing flirt without resample"
-    flirt -interp spline -noresample -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+    flirt -interp ${interp} -noresample -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
 fi
 convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
 aff2rigid full2std.mat outputmatrix
@@ -68,7 +69,10 @@ for i in ${volumes}
 do
     input=$(eval "echo \$${i}")
     outname=`echo ${i/_/.}`
-    applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o ./output/${outname}.nii.gz
+    if [[ ${interp} == 'nearestneighbour' ]]; then
+        interp="nn"
+    fi
+    applywarp --rel --interp=${interp} -i $input -r $template --premat=outputmatrix -o ./output/${outname}.nii.gz
 done
 
 for i in ${volumes}
