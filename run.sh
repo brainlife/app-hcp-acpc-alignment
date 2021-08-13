@@ -21,23 +21,27 @@ unit1_json=`jq -r '.unit1_json' config.json`
 template=`jq -r '.template' config.json`
 resample=`jq -r '.resample' config.json`
 interp=`jq -r '.interp' config.json`
+anat=`jq -r '.anat' config.json`
 
 product=""
 
 #we use space from
 #https://bids-specification.readthedocs.io/en/stable/99-appendices/08-coordinate-systems.html#template-based-coordinate-systems
 
-
-case $template in
-nihpd_asym*)
-    space="NIHPD"
-    template=templates/${template}_t1w.nii
-    ;;
-*)
-    space="MNI152NLin6Asym"
-    template=templates/MNI152_T1_1mm
-    ;;
-esac
+if [ -f ${anat} ]; then
+    template=${anat}
+else
+    case $template in
+    nihpd_asym*)
+        space="NIHPD"
+        template=templates/${template}_t1w.nii
+        ;;
+    *)
+        space="MNI152NLin6Asym"
+        template=templates/MNI152_T1_1mm
+        ;;
+    esac
+fi
 
 # identify the volumes in mp2rage datatype
 echo "identifying mp2rage volumes"
