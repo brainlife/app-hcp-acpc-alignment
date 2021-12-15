@@ -1,16 +1,26 @@
 #!/bin/bash
 
-## This app will align a T1/T2w image to the ACPC plane (specifically, the MNI152_T1/2_1mm template from
+## This app will align a mp2rage image to the ACPC plane (specifically, the MNI152_T1m template from
 ## FSL using a 6 DOF alignment via FSL commands. This protocol was adapted from the HCP Preprocessing
-## Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a T1w image input
+## Pipeline (https://github.com/Washington-University/HCPpipelines.git). Requires a mp2rage image input
 ## and outputs an acpc_aligned T1w image.
 
 set -x
 set -e
 
-input=`jq -r '.input' config.json`
+mag_inv1=`jq -r '.mag_inv1' config.json`
+mag_inv1_json=`jq -r '.mag_inv1_json' config.json`
+mag_inv2=`jq -r '.mag_inv2' config.json`
+mag_inv2_json=`jq -r '.mag_inv2_json' config.json`
+phase_inv1=`jq -r '.phase_inv1' config.json`
+phase_inv1_json=`jq -r '.phase_inv1_json' config.json`
+phase_inv2=`jq -r '.phase_inv2' config.json`
+phase_inv2_json=`jq -r '.phase_inv2_json' config.json`
+unit1=`jq -r '.unit1' config.json`
+unit1_json=`jq -r '.unit1_json' config.json`
 template=`jq -r '.template' config.json`
-type=`jq -r '.type' config.json` #T1 or T2
+resample=`jq -r '.resample' config.json`
+interp=`jq -r '.interp' config.json`
 
 product=""
 
@@ -21,36 +31,58 @@ product=""
 case $template in
 nihpd_asym*)
     space="NIHPD"
-    [ $type == "T1" ] && template=templates/${template}_t1w.nii
-    [ $type == "T2" ] && template=templates/${template}_t2w.nii
+    template=templates/${template}_t1w.nii
     ;;
 *)
     space="MNI152NLin6Asym"
-    [ $type == "T1" ] && template=templates/MNI152_T1_1mm
-    [ $type == "T2" ] && template=templates/MNI152_T2_1mm
+    template=templates/MNI152_T1_1mm
     ;;
 esac
 
-case $type in
-T1)
-    output=output/t1.nii.gz
-    ;;
-T2)
-    output=output/t2.nii.gz
-    ;;
-esac
+# identify the volumes in mp2rage datatype
+echo "identifying mp2rage volumes"
+volumes=""
+potential_volumes="mag_inv1 mag_inv2 phase_inv1 phase_inv2 unit1"
+for i in ${potential_volumes}
+do
+    test_vol=$(eval "echo \$${i}")
+    if [ -f ${test_vol} ]; then
+        volumes=${volumes}" ${i}"
+    fi
+done
 
-robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
+# crop data
+robustfov -i ${unit1} -m roi2full.mat -r unit1.cropped.nii.gz
 convert_xfm -omat full2roi.mat -inverse roi2full.mat
-flirt -interp spline -in input_robustfov.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+if [[ ${resample} == true ]]; then
+    echo "computing flirt with resample"
+    flirt -interp ${interp} -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+else
+    echo "computing flirt without resample"
+    flirt -interp ${interp} -noresample -in unit1.cropped.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
+fi
 convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
 aff2rigid full2std.mat outputmatrix
 
 mkdir -p output
-applywarp --rel --interp=spline -i $input -r $template --premat=outputmatrix -o $output
+for i in ${volumes}
+do
+    input=$(eval "echo \$${i}")
+    outname=`echo ${i/_/.}`
+    if [[ ${interp} == 'nearestneighbour' ]]; then
+        interp="nn"
+    fi
+    applywarp --rel --interp=${interp} -i $input -r $template --premat=outputmatrix -o ./output/${outname}.nii.gz
+done
+
+for i in ${volumes}
+do
+    vol_json=$(eval "echo \$${i}_json")
+    cp -v ${vol_json} ./output/
+done
 
 # make png
-slicer $output -x 0.5 out_aligncheck.png
+slicer ./output/mag.inv1.nii.gz -x 0.5 out_aligncheck.png
 
 # create product.json
 cat << EOF > product.json
