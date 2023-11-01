@@ -11,7 +11,7 @@ set -e
 input=`jq -r '.input' config.json`
 template=`jq -r '.template' config.json`
 type=`jq -r '.type' config.json` #T1 or T2
-
+crop=`jq -r '.crop' config.json`
 [ ! -d ./transform ] && mkdir -p transform
 
 product=""
@@ -42,10 +42,20 @@ T2)
     ;;
 esac
 
-robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
-convert_xfm -omat full2roi.mat -inverse roi2full.mat
+if [[ ${crop} == "true" ]]; then
+    robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
+    convert_xfm -omat full2roi.mat -inverse roi2full.mat
+else
+    cp ${input} ./input_robustfov.nii.gz
+fi
+
 flirt -interp spline -in input_robustfov.nii.gz -ref $template -omat roi2std.mat -out acpc_mni.nii.gz
-convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
+
+if [[ ${crop} == "true" ]]; then
+    convert_xfm -omat full2std.mat -concat roi2std.mat full2roi.mat
+else
+    cp roi2std.mat ./full2std.mat
+fi
 aff2rigid full2std.mat outputmatrix
 
 mkdir -p output
