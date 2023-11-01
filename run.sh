@@ -12,6 +12,7 @@ input=`jq -r '.input' config.json`
 template=`jq -r '.template' config.json`
 type=`jq -r '.type' config.json` #T1 or T2
 crop=`jq -r '.crop' config.json`
+reorient=`jq -r '.reorient' config.json`
 [ ! -d ./transform ] && mkdir -p transform
 
 product=""
@@ -41,6 +42,10 @@ T2)
     output=output/t2.nii.gz
     ;;
 esac
+
+if [[ ${reorient} == "true" ]]; then
+    fslreorient2std -m reorient.txt ${input} ./${type}_reorient && input=${type}_reorient
+fi
 
 if [[ ${crop} == "true" ]]; then
     robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
