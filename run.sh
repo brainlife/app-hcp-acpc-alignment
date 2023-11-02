@@ -43,11 +43,11 @@ T2)
     ;;
 esac
 
-if [[ ${reorient} == "true" ]]; then
+if [ ${reorient} ]; then
     fslreorient2std -m reorient.txt ${input} ./${type}_reorient && input=${type}_reorient
 fi
 
-if [[ ${crop} == "true" ]]; then
+if [ ${crop} ]; then
     robustfov -i $input -m roi2full.mat -r input_robustfov.nii.gz
     convert_xfm -omat full2roi.mat -inverse roi2full.mat
 else
