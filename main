@@ -6,5 +6,5 @@
 set -e
 set -x
 
-time singularity exec -e docker://brainlife/fsl:5.0.9 ./run.sh
+time singularity exec -e docker://brainlife/fsl:6.0.4-patched ./run.sh
 
