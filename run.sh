@@ -44,7 +44,7 @@ T2)
 esac
 
 if [[ ${reorient} == "true" ]]; then
-    fslreorient2std -m reorient.txt ${input} ./${type}_reorient && input=${type}_reorient
+    fslreorient2std -m reorient.txt ${input} ./${type}_reorient && input=${type}_reorient.nii.gz
 fi
 
 if [[ ${crop} == "true" ]]; then
