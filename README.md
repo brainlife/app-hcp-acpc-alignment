@@ -10,14 +10,14 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-> 📍 **This branch, `1.4`, runs 2 brainlife.io Apps** that share the same code:
+> **This branch, `1.4`, runs 2 brainlife.io Apps** that share the same code:
 >
 > - Align T2 to ACPC Plane (HCP-based) ([doi:10.25663/brainlife.app.116](https://doi.org/10.25663/brainlife.app.116))
 > - Align T1 to ACPC Plane (HCP-based) - deprecated ([doi:10.25663/bl.app.99](https://doi.org/10.25663/bl.app.99)) (deprecated)
 >
 > The other Apps in this repository are listed under **Versions on brainlife.io** below.
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -27,19 +27,19 @@ Crops the neck with robustfov, estimates an affine registration to the template 
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/anat/t2w` |
-| 📤 **Outputs** | `neuro/anat/t2w` · `neuro/transform/nifti` |
-| 🐳 **Container** | `brainlife/fsl:5.0.9` |
-| ⚙️ **Resources** | 1 CPUs · 0.42 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.116](https://doi.org/10.25663/brainlife.app.116) |
+| **Inputs** | `neuro/anat/t2w` |
+| **Outputs** | `neuro/anat/t2w` · `neuro/transform/nifti` |
+| **Container** | `brainlife/fsl:5.0.9` |
+| **Resources** | 1 CPUs · 0.42 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.116](https://doi.org/10.25663/brainlife.app.116) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `t2` | `neuro/anat/t2w` (!acpc_aligned) | yes | The path to the anat/t2w datatype to be aligned |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
@@ -47,7 +47,7 @@ Crops the neck with robustfov, estimates an affine registration to the template 
 | `transform` | `neuro/transform/nifti` | Rigid (6 DOF) affine matrix (affine.txt) mapping the input T2w to the ACPC-aligned template space. |
 
 <details>
-<summary><b>⚙️ Parameters</b> (4)</summary>
+<summary><b>Parameters</b> (4)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -66,7 +66,7 @@ These Apps put an anatomical image in a standard ACPC orientation before FreeSur
 
 The default template is FSL's MNI152 1 mm (T1 or T2). For paediatric data, choose one of the NIHPD asymmetric templates for the matching age range (`nihpd_asym_04.5-08.5`, `nihpd_asym_04.5-18.5`, `nihpd_asym_07.0-11.0`, `nihpd_asym_07.5-13.5`, `nihpd_asym_10.0-14.0`, `nihpd_asym_13.0-18.5`); otherwise `flirt` may fail to align the image correctly.
 
-## 🏷️ Versions on brainlife.io
+## Versions on brainlife.io
 
 Each App is built from its own branch of this repository.
 
@@ -77,9 +77,9 @@ Each App is built from its own branch of this repository.
 | Align mp2rage to ACPC Plane (HCP-based) | MP2RAGE | 5.0.9 | [`mp2rage-v1.5`](https://github.com/brainlife/app-hcp-acpc-alignment/tree/mp2rage-v1.5) | [doi:10.25663/brainlife.app.511](https://doi.org/10.25663/brainlife.app.511) | current |
 | **Align T1 to ACPC Plane (HCP-based) - deprecated** (this branch) | T1w | 5.0.9 | [`1.4`](https://github.com/brainlife/app-hcp-acpc-alignment/tree/1.4) | [doi:10.25663/bl.app.99](https://doi.org/10.25663/bl.app.99) | deprecated |
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App for your image type from the table above, choose the image from your project, set the options and press **Execute**. The aligned image is written to your project tagged `acpc_aligned` (and `preprocessed` for T1w and T2w), together with the rigid transform for the T1w and T2w Apps. Each run also shows an alignment-check image (a sagittal slice) on brainlife.io.
 
@@ -93,7 +93,7 @@ Options of the T1w App (`1.5`):
 
 The T2w App (`1.4`) always crops with `robustfov` and does not use `reorient`. The MP2RAGE App estimates the alignment from the UNI (`unit1`) image and applies it to every MP2RAGE volume present (magnitude and phase of both inversions, and UNI); it can align to a T1w of the same subject instead of a template, and has `resample` (default `true`) and `interp` (`nearestneighbour` by default; `trilinear`, `spline` or `sinc`) options.
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqlang.github.io/jq/). The templates are stored in the `templates/` directory of each App branch.
 
@@ -120,7 +120,7 @@ You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqla
    ./main
    ```
 
-### 🧪 Sample data
+### Sample data
 
 Download a T1-weighted sample from brainlife.io with the [brainlife CLI](https://github.com/brainlife/cli):
 
@@ -131,7 +131,7 @@ mkdir input
 bl dataset download 5b96bbbf059cf900271924f2 && mv 5b96bbbf059cf900271924f2 input/t1
 ```
 
-## 📦 Outputs
+## Outputs
 
 ```text
 output/
@@ -143,13 +143,13 @@ transform/
 
 The space of the output (`MNI152NLin6Asym` or `NIHPD`) is recorded in the dataset metadata.
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **Paediatric images are badly aligned**: choose the NIHPD template for the subject's age range instead of `MNI152_1mm`.
 - **Skull-stripped input is badly aligned**: set `mask` (T1w App) so the template is brain-masked as well.
 - **Large neck or unusual field of view**: set `crop` (T1w App) to crop with `robustfov` before registration.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -162,14 +162,14 @@ The space of the output (`MNI152NLin6Asym` or `NIHPD`) is recorded in the datase
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 - Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## 👥 Authors
+## Authors
 
 - Brad Caron
 - Franco Pestilli (project director)
 
 **Contributors:** Soichi Hayashi
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -188,6 +188,6 @@ The space of the output (`MNI152NLin6Asym` or `NIHPD`) is recorded in the datase
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 [MIT](LICENSE). FSL is distributed under its own [license](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence).
