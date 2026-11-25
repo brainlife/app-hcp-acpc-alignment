@@ -12,7 +12,7 @@ This app will align a T1w or T2w image to the ACPC plane (specifically, the MNI1
 ### Contributors 
 
 - Soichi Hayashi (hayashis@iu.edu
-- Franco Pestilli (franpest@iu.edu) 
+- Franco Pestilli ([@francopestilli](https://github.com/francopestilli)) 
 
 ### Funding 
 
