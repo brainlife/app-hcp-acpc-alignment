@@ -12,7 +12,7 @@ This app will align mp2rage images to the ACPC plane (specifically, the MNI152_T
 ### Contributors 
 
 - Soichi Hayashi (hayashis@iu.edu
-- Franco Pestilli (franpest@iu.edu) 
+- Franco Pestilli ([@francopestilli](https://github.com/francopestilli)) 
 - Sophia Vinci-Booher (svincibo@iu.edu)
 
 ### Funding 
